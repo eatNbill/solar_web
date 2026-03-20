@@ -2,10 +2,10 @@
 export const SITE = {
   name: 'SolarEdge Pro',
   tagline: "Gujarat's Trusted Solar Partner",
-  phone: '+919876543210',
-  phoneDisplay: '+91 98765 43210',
-  whatsapp: '919876543210',
-  email: 'info@solaredgepro.in',
+  phone: '+917990471946',
+  phoneDisplay: '+91 7990471946',
+  whatsapp: '917990471946',
+  email: '11iamyasin@gmail.com',
   address: '123, Solar Nagar, Surat – 395001, Gujarat',
   city: 'Surat, Gujarat',
   mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118147!2d72.7714!3d21.1702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04e59411d1563%3A0xfe4558290938b042!2sSurat%2C+Gujarat!5e0!3m2!1sen!2sin!4v1',
@@ -24,8 +24,8 @@ export const SLIDES = [
 export const STATS = [
   { num: 500, unit: '+', label: 'Projects Done' },
   { num: 450, unit: '+', label: 'Happy Customers' },
-  { num: 12,  unit: ' Yrs', label: 'Experience' },
-  { num: 5,   unit: 'MW+', label: 'Capacity Installed' },
+  { num: 12, unit: ' Yrs', label: 'Experience' },
+  { num: 5, unit: 'MW+', label: 'Capacity Installed' },
 ];
 
 export const SERVICES = [
@@ -98,4 +98,4 @@ export const CERTIFICATIONS = [
   { ico: '📋', title: 'PM Surya Ghar', sub: 'Registered EPC' },
 ];
 
-export const BRANDS = ['☀️ Waaree Solar','⚡ Adani Solar','🌞 Vikram Solar','🏭 Tata Power Solar','🔋 Growatt','⚡ Delta','💡 Havells','🔌 Solaredge'];
+export const BRANDS = ['☀️ Waaree Solar', '⚡ Adani Solar', '🌞 Vikram Solar', '🏭 Tata Power Solar', '🔋 Growatt', '⚡ Delta', '💡 Havells', '🔌 Solaredge'];
