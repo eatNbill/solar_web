@@ -1,5 +1,5 @@
 {
-  "name": "solar-pro",
+  "name": "new-folder",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,9 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.2.2",
+    "autoprefixer": "^10.4.27",
+    "init": "^0.1.2",
+    "lucide-react": "^0.469.0",
+    "postcss": "^8.5.8",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-router-dom": "^7.13.1"
+    "react-router-dom": "^7.13.2",
+    "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",

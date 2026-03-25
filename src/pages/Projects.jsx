@@ -1,65 +1,117 @@
-import { useState, useEffect } from 'react'
-import { GALLERY } from '../data/siteData'
-import PageHero from '../components/PageHero'
-import QuickBar from '../components/QuickBar'
-import CtaBanner from '../components/CtaBanner'
-import Lightbox from '../components/Lightbox'
+import React, { useState } from 'react';
+import { GALLERY, BRANDS } from '../data/siteData';
 
-const CATS = [
-  { key: 'all', label: 'All' },
-  { key: 'residential', label: '🏠 Residential' },
-  { key: 'commercial', label: '🏭 Commercial' },
-  { key: 'industrial', label: '🏗️ Industrial' },
-  { key: 'pump', label: '💧 Solar Pump' },
-]
+const Projects = () => {
+    const [filter, setFilter] = useState('all');
+    
+    // Categorize gallery manually for filtering
+    const categorizedGallery = GALLERY.map(g => ({
+        ...g,
+        catLabel: g.cat.charAt(0).toUpperCase() + g.cat.slice(1)
+    }));
 
-export default function Projects() {
-  const [cat, setCat] = useState('all')
-  const [lbIdx, setLbIdx] = useState(null)
+    const filteredGallery = filter === 'all' 
+        ? categorizedGallery 
+        : categorizedGallery.filter(g => g.cat === filter);
 
-  const filtered = cat === 'all' ? GALLERY : GALLERY.filter(g => g.cat === cat)
+    const categories = ['all', ...new Set(categorizedGallery.map(g => g.cat))];
 
-  useEffect(() => {
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target) } })
-    }, { threshold: 0.1 })
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el))
-    return () => obs.disconnect()
-  }, [cat])
+    return (
+        <div className="animate-in fade-in duration-700">
+            {/* Page Hero */}
+            <section className="bg-secondary py-24 px-6 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
+                <div className="max-w-7xl mx-auto relative z-10 text-center">
+                    <span className="inline-block bg-primary text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-6">
+                        Case Studies
+                    </span>
+                    <h1 className="text-4xl md:text-6xl font-black text-white leading-tight mb-6">
+                        Our Recent <br />
+                        <span className="text-primary italic">Solar Installations</span>
+                    </h1>
+                    <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                        500+ successful installations across Gujarat, helping thousands switch to clean energy every day.
+                    </p>
+                </div>
+            </section>
 
-  return (
-    <>
-      <PageHero tag="📸 Our Work" title="Completed Projects" sub="500+ solar installations across Gujarat — homes, factories, and farms" />
-      <QuickBar />
+            {/* Filter Gallery Section */}
+            <section className="py-24 px-6 bg-lightBg">
+                <div className="max-w-7xl mx-auto">
+                    <div className="flex flex-wrap gap-4 justify-center mb-16">
+                        {categories.map((cat, i) => (
+                            <button
+                                key={i}
+                                onClick={() => setFilter(cat)}
+                                className={`px-8 py-3 rounded-2xl font-bold uppercase tracking-widest text-xs transition-all ${
+                                    filter === cat 
+                                    ? 'bg-primary text-white shadow-xl shadow-orange-900/40' 
+                                    : 'bg-white text-secondary border border-gray-100 hover:bg-orange-50'
+                                }`}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
 
-      <section className="section section-off">
-        <div className="filter-bar">
-          {CATS.map(c => (
-            <button key={c.key} className={`filter-btn${cat === c.key ? ' active' : ''}`} onClick={() => { setCat(c.key); setLbIdx(null) }}>
-              {c.label}
-            </button>
-          ))}
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {filteredGallery.map((g, i) => (
+                            <div key={i} className={`relative group h-96 overflow-hidden rounded-[2.5rem] shadow-2xl ${g.span2 ? 'md:col-span-2' : ''}`}>
+                                <img 
+                                    src={g.src} 
+                                    alt={g.cap} 
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/40 to-transparent p-10 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                    <span className="text-primary font-black text-xs uppercase tracking-widest mb-2 block">{g.catLabel}</span>
+                                    <h3 className="text-white text-3xl font-black leading-tight drop-shadow-lg">{g.cap}</h3>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Brands Partner */}
+            <section className="py-24 px-6 bg-white overflow-hidden">
+                <div className="max-w-7xl mx-auto text-center">
+                    <div className="text-primary font-bold uppercase tracking-widest text-xs mb-4">Our Partners</div>
+                    <h2 className="text-3xl md:text-5xl font-extrabold text-secondary mb-16 leading-tight">
+                        Powering You with Tier-1 Brands
+                    </h2>
+                    <div className="flex flex-wrap justify-center gap-6">
+                        {BRANDS.map((brand, i) => (
+                            <div key={i} className="bg-lightBg px-10 py-6 rounded-3xl border border-gray-100 text-lg font-black text-secondary/70 hover:text-primary transition-colors cursor-default">
+                                {brand}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Start Your Project CTA */}
+            <section className="py-24 px-6 bg-secondary relative overflow-hidden text-center">
+                <div className="absolute top-0 left-0 w-full h-full bg-primary/5 blur-[100px] -translate-y-1/2" />
+                <div className="max-w-4xl mx-auto relative z-10 space-y-8">
+                    <h2 className="text-4xl md:text-6xl font-black text-white leading-tight">
+                        Want your roof <br />
+                        <span className="text-primary italic">to count too?</span>
+                    </h2>
+                    <p className="text-gray-400 text-lg">
+                        Transform your roof into a power plant. Get a personalized proposal within 24 hours.
+                    </p>
+                    <div className="pt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="/contact" className="bg-primary text-white px-12 py-5 rounded-2xl font-bold text-xl hover:-translate-y-1 transition shadow-xl">
+                            Request Proposal
+                        </a>
+                        <a href={`https://wa.me/917990471946`} className="bg-white/10 text-white border border-white/20 px-12 py-5 rounded-2xl font-bold text-xl hover:bg-white/20 transition">
+                            See More Work
+                        </a>
+                    </div>
+                </div>
+            </section>
         </div>
+    );
+};
 
-        <div className="gallery-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
-          {filtered.map((g, i) => (
-            <div key={i} className="gal-item reveal" onClick={() => setLbIdx(i)}>
-              <img src={g.src} alt={g.cap} loading="lazy" />
-              <div className="gal-over"><span>{g.cap}</span></div>
-              <button className="gal-zoom" onClick={e => { e.stopPropagation(); setLbIdx(i) }}>🔍</button>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {lbIdx !== null && (
-        <Lightbox items={filtered} index={lbIdx} onClose={() => setLbIdx(null)}
-          onPrev={() => setLbIdx(i => (i - 1 + filtered.length) % filtered.length)}
-          onNext={() => setLbIdx(i => (i + 1) % filtered.length)}
-        />
-      )}
-
-      <CtaBanner title="Want a Similar System?" sub="Get a FREE site visit and custom quote" />
-    </>
-  )
-}
+export default Projects;
